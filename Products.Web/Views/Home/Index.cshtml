@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+
+<h2>Home</h2>
+
+<div ng-app="productsApp" ng-controller="ProductsController">
+    <ul ng-repeat="prod in products">
+        <li><b>Name:</b> {{prod.Name}}, <b>Category:</b> {{prod.Category}}, <b>Price:</b> {{prod.Price}}</li>
+    </ul>
+</div>
+
+
+<script>
+    angular.module('productsApp', []).controller('ProductsController', function ($scope, $http) {
+        $http({ method: 'GET', url: 'http://localhost:2151/api/products' }).
+          success(function (data, status, headers, config) {
+              $scope.products = data;
+          }).
+        error(function (data, status, headers, config) {
+            $scope.products = [];
+        });
+    });
+
+</script>
+

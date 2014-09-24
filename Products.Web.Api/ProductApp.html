@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.3/angular.min.js"></script>
+        <title></title>
+    </head>
+<body ng-app="productsApp" ng-controller="ProductsController">
+    <ul ng-repeat="prod in products">
+        <li><b>Name:</b> {{prod.Name}}, <b>Category:</b> {{prod.Category}}, <b>Price:</b> {{prod.Price}}</li>
+    </ul>
+</body>
+</html>
+
+<script>
+    angular.module('productsApp', []).controller('ProductsController', function ($scope, $http) {
+        $http({ method: 'GET', url: 'api/products' }).
+          success(function (data, status, headers, config) {
+                $scope.products = data;
+            }).
+        error(function (data, status, headers, config) {
+            $scope.products = [];
+        });
+    });
+    
+</script>
