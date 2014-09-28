@@ -5,6 +5,7 @@ using Ninject;
 using Ninject.Syntax;
 using System.Web;
 using Ninject.Web.Common;
+using Products.Web.Api.Services;
 
 namespace Products.Web.Api.App_Start
 {
@@ -77,7 +78,7 @@ namespace Products.Web.Api.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             // This is where we tell Ninject how to resolve service requests
-            //kernel.Bind<IProductRepository>().To<ProductRepository>();
+            kernel.Bind<IProductService>().To<ProductService>();
         }
     }
 }

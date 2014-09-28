@@ -4,26 +4,27 @@ using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Products.Web.Api.Models;
+using Products.Web.Api.Services;
 
 namespace Products.Web.Api.Controllers
 {
     [EnableCors("*", headers: "*", methods: "*")]
     public class ProductsController : ApiController
     {
-        Product[] products = new Product[] 
-        { 
-            new Product { Id = 1, Name = "Tomato Soup", Category = "Groceries", Price = 1 }, 
-            new Product { Id = 2, Name = "Yo-yo", Category = "Toys", Price = 3.75M }, 
-            new Product { Id = 3, Name = "Hammer", Category = "Hardware", Price = 16.99M } 
-        };
+        private readonly IProductService _productService;
+        public ProductsController(IProductService productService)
+        {
+            _productService = productService;
+        }
+        
         public IEnumerable<Product> GetAllProducts()
         {
-            return products;
+            return _productService.GetAllProducts();
         }
 
         public IHttpActionResult GetProduct(int id)
         {
-            var product = products.FirstOrDefault((p) => p.Id == id);
+            var product = _productService.GetSingleProduct(id);
             if (product == null)
             {
                 return null;
